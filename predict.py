@@ -34,17 +34,17 @@ class Predictor(BasePredictor):
     def predict(
         self,
         image: Path = Input(
-            description="List of image file paths to extract embeddings."
+            description="Image to embed with ColPali"
         ),
-    ) -> List[List[float]]:
+    ) -> List[float]:
         """
         Perform inference. Extract image embeddings from the model.
 
         Parameters:
-        - images: A list of image paths (file paths to images).
+        - image: An image path.
 
         Returns:
-        - A nested list of image embeddings, one list per image.
+        - An embedding of the image
         """
         # Load images from file paths as PIL images
         images = [image]
@@ -58,4 +58,4 @@ class Predictor(BasePredictor):
             image_embeddings = self.model(**batch_images)
 
         # Convert embeddings from Torch tensor to Python-native nested list
-        return image_embeddings.cpu().tolist()
+        return image_embeddings.cpu().tolist()[0]
