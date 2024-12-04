@@ -14,8 +14,7 @@ class Predictor(BasePredictor):
         This method is called once when the predictor is initialized.
         The model and preprocessor are loaded here.
         """
-        # self.device = "cuda" if torch.cuda.is_available() else "cpu"
-        self.device = "cpu"
+        self.device = "cuda" if torch.cuda.is_available() else "cpu"
 
         # Load the ColPali model
         self.model = ColPali.from_pretrained(
@@ -30,6 +29,7 @@ class Predictor(BasePredictor):
         self.processor = ColPaliProcessor.from_pretrained(
             MODEL_NAME, cache_dir=CACHE_DIR, local_files_only=True
         )
+        self.model.to(self.device)
     
     def predict(
         self,
