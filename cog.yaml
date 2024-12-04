@@ -1,0 +1,8 @@
+build:
+  gpu: true
+  python_version: "3.11"
+  python_packages: 
+    - "torch==2.4.1"
+    - "colpali-engine==0.3.4"
+
+predict: "predict.py:Predictor"

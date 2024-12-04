@@ -1,0 +1,27 @@
+#!/usr/bin/env python
+ 
+import os
+import shutil
+import torch
+from colpali_engine.models import ColPali, ColPaliProcessor
+ 
+CACHE_DIR = 'weights'
+MODEL_NAME = "vidore/colpali-v1.2"  # Replace with your actual model identifier
+ 
+if os.path.exists(CACHE_DIR):
+    shutil.rmtree(CACHE_DIR)
+ 
+os.makedirs(CACHE_DIR)
+ 
+# Load the processor
+processor = ColPaliProcessor.from_pretrained(
+    MODEL_NAME, cache_dir=CACHE_DIR
+)
+
+model = ColPali.from_pretrained(
+    MODEL_NAME,
+    torch_dtype=torch.bfloat16,
+    cache_dir=CACHE_DIR,  # Cache model files locally
+    # local_files_only=True
+).eval()
+
